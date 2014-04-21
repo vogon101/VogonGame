@@ -2,6 +2,8 @@ package com.vogon101.game.lib.vogongame.platform;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.util.Random;
+
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
@@ -319,7 +321,6 @@ public class Mob {
 	public double getTopEdge() {
 		return y+height;
 	}
-	
 	public double getLeftEdge() {
 		return x;
 	}
@@ -332,8 +333,21 @@ public class Mob {
 		return y;
 	}
 	
+	/**
+	 * Kill the mob, override to do better things
+	 * Will spawn 0-40 coins
+	 */
 	public void kill() {
 		alive = false;
 		dieing = true;
+		Random r = new Random();
+		for (int i = 0; i < r.nextInt(40); i++) {
+			int test  = r.nextInt(2);
+			if (test == 1) {
+				level.getCoins().add(new Coin(x+(width/2), y+(height/2), level.game, -r.nextDouble(), r.nextDouble()));
+			}
+			level.getCoins().add(new Coin(x+(width/2), y+(height/2), level.game, r.nextDouble(), r.nextDouble()));
+		}
+		
 	}
 }

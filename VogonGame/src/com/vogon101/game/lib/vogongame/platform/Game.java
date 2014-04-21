@@ -126,6 +126,9 @@ public class Game {
 		for (Platform plat : level.getPlatforms()) {
 			plat.logic();
 		}
+		for (Coin coin : level.getCoins()) {
+			coin.logic();
+		}
 		player.logic();
 		addLogic();
 	}
@@ -150,6 +153,9 @@ public class Game {
 		
 		for (Platform plat : level.getPlatforms()) {
 			plat.draw();
+		}
+		for (Coin coin : level.getCoins()) {
+			coin.draw();
 		}
 		player.draw();
 		

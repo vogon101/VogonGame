@@ -16,6 +16,7 @@ public class Level {
 
 	protected ArrayList<Mob> mobs  = new ArrayList<Mob>();
 	protected ArrayList<Platform> platforms = new ArrayList<Platform>();
+	protected ArrayList<Coin> coins = new ArrayList<Coin>();
 	protected Game game;
 	protected double WIDTH, HEIGHT;
 	
@@ -116,6 +117,10 @@ public class Level {
 	 */
 	public void addPlatform (double x, double y, double width, double height) {
 		platforms.add(new Platform(x, y, width, height));
+	}
+	
+	public ArrayList<Coin> getCoins () {
+		return coins;
 	}
 	
 }
