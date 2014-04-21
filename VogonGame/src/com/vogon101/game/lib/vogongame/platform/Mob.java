@@ -17,9 +17,9 @@ public class Mob {
 
 	protected Level level;
 	protected Texture texture = null;
-	protected int height  = 64, width = 64, xSpeed = 0, ySpeed = 0, xSave = xSpeed, ySave = ySpeed, jumptimer;
+	protected int height  = 64, width = 64, xSpeed = 0, ySpeed = 0, xSave = xSpeed, ySave = ySpeed, jumptimer, dieTimer, respawnTimer;
 	protected double x, y, r = 0, g = 0, b = 1, floor = 0, basefloor = 0;
-	protected boolean jump = false;
+	protected boolean jump = false, alive = true, there = true, dieing = false, respawning = false;
 	
 	/**
 	 * <b>Constructor</b><br/>
@@ -90,16 +90,34 @@ public class Mob {
 	 * override to do fancier stuff
 	 */
 	public void logic() {
-		x += xSpeed;
-		y += ySpeed;
-		gravity();
-		if (x>level.WIDTH-width) {
-			xSpeed = -xSave;
+		if (!alive) {
+			if (dieing) {
+				dieTimer++;
+				if (dieTimer > 0 && dieTimer < 150) {
+					y++;
+				}
+				else if (dieTimer > 150 && dieTimer < 550) {
+					y--;
+				}
+				
+				if (dieTimer == 350) {
+					dieing = false;
+					dieTimer = 0;
+					there = false;
+				}
+			}
 		}
-		if (x<0) {
-			xSpeed = xSave;
+		else if (there) {
+			x += xSpeed;
+			y += ySpeed;
+			gravity();
+			if (x>level.WIDTH-width) {
+				xSpeed = -xSave;
+			}
+			if (x<0) {
+				xSpeed = xSave;
+			}
 		}
-	
 	}
 	
 	
@@ -151,55 +169,57 @@ public class Mob {
 	 * unless texture is set {@link setTexture (Texture texture)}
 	 */
 	public void draw() {
-		glPushMatrix();
-		glTranslated(x, y, 0);
-		
-		
-		
-		/*
-		 * For a quad the coords are:
-		 * vertex 1 = 0, 0
-		 * vertex 2 = width, 0
-		 * vertex 3 = width, height
-		 * vertex 4 = 0, height
-		 */
-		
-		
-		if (texture != null) {
-			glEnable(GL_TEXTURE_2D);
-			glEnable(GL_BLEND); glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glBegin(GL_QUADS);
-			texture.bind();
-			{
-				
-				glTexCoord2f(0,0);
-				glVertex2d(0, 0);
-				glTexCoord2f(1,0);
-				glVertex2d(width, 0);
-				glTexCoord2f(1,1);
-				glVertex2d(width, height);
-				glTexCoord2f(1,0);
-				glVertex2d(0, height);
+		if (there) {
+			glPushMatrix();
+			glTranslated(x, y, 0);
+			
+			
+			
+			/*
+			 * For a quad the coords are:
+			 * vertex 1 = 0, 0
+			 * vertex 2 = width, 0
+			 * vertex 3 = width, height
+			 * vertex 4 = 0, height
+			 */
+			
+			
+			if (texture != null) {
+				glEnable(GL_TEXTURE_2D);
+				glEnable(GL_BLEND); glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				glBegin(GL_QUADS);
+				texture.bind();
+				{
+					
+					glTexCoord2f(0,0);
+					glVertex2d(0, 0);
+					glTexCoord2f(1,0);
+					glVertex2d(width, 0);
+					glTexCoord2f(1,1);
+					glVertex2d(width, height);
+					glTexCoord2f(1,0);
+					glVertex2d(0, height);
+				}
+				texture.release();
+				glEnd();
+				glDisable(GL_TEXTURE_2D);
 			}
-			texture.release();
-			glEnd();
-			glDisable(GL_TEXTURE_2D);
-		}
-		else {
-			glBegin(GL_QUADS);
-			{
-				glColor3d(r, g, b);
-				glVertex2d(0, 0);
-				glVertex2d(width, 0);
-				glVertex2d(width, height);
-				glVertex2d(0, height);
+			else {
+				glBegin(GL_QUADS);
+				{
+					glColor3d(r, g, b);
+					glVertex2d(0, 0);
+					glVertex2d(width, 0);
+					glVertex2d(width, height);
+					glVertex2d(0, height);
+				}
+				glEnd();
 			}
-			glEnd();
+	
+			
+			
+			glPopMatrix();
 		}
-
-		
-		
-		glPopMatrix();
 	}
 	
 	/**
@@ -290,5 +310,30 @@ public class Mob {
 		xSave = xSave_;
 		ySave = ySave_;
 		
+	}
+	
+	public boolean isAlive () {
+		return alive;
+	}
+
+	public double getTopEdge() {
+		return y+height;
+	}
+	
+	public double getLeftEdge() {
+		return x;
+	}
+	
+	public double getRightEdge() {
+		return x+width;
+	}
+	
+	public double getBottomEdge(){
+		return y;
+	}
+	
+	public void kill() {
+		alive = false;
+		dieing = true;
 	}
 }

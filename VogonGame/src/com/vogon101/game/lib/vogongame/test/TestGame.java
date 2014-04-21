@@ -1,5 +1,7 @@
 package com.vogon101.game.lib.vogongame.test;
 
+import org.lwjgl.LWJGLException;
+
 import com.vogon101.game.lib.vogongame.VogonGameException;
 import com.vogon101.game.lib.vogongame.platform.Game;
 import com.vogon101.game.lib.vogongame.platform.Level;
@@ -20,6 +22,22 @@ public class TestGame extends Game{
 		setLevel(new Level(this, width, height));
 		tp.setLevel(getLevel());
 		
+	}
+	
+	@Override
+	public void start() throws VogonGameException {
+		try {
+			initGl();
+		} catch (LWJGLException e1) {
+			e1.printStackTrace();
+			throw new VogonGameException("ERROR IN GL INIT! MESSAGE - " + e1.getMessage());
+		}
+		try {
+			player.setTexture("res/char.png");
+		} catch (VogonGameException e) {
+			e.printStackTrace();
+		}
+		mainloop();
 	}
 
 	private static TestGame game;

@@ -15,7 +15,7 @@ public class VogonTextureLoader {
 		try {
 			texture = TextureLoader.getTexture("PNG", new FileInputStream(new File(path)));
 		} catch (Exception e)  {
-			throw new VogonGameException(("The texture could not be loaded - Exception trace:   \n" + e.getStackTrace()));
+			throw new VogonGameException(("The texture could not be loaded - Exception trace:   \n" + e.getMessage()));
 		}
 		return texture;
 	}
@@ -25,7 +25,7 @@ public class VogonTextureLoader {
 		try {
 			texture = TextureLoader.getTexture(type, new FileInputStream(new File(path)));
 		} catch (Exception e)  {
-			throw new VogonGameException(("The texture could not be loaded - Exception trace:   \n" + e.getStackTrace()));
+			throw new VogonGameException(("The texture could not be loaded - Exception trace:   \n" + e.getMessage()));
 		}
 		return texture;
 	}
