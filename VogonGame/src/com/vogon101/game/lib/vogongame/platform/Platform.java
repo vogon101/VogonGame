@@ -2,6 +2,15 @@ package com.vogon101.game.lib.vogongame.platform;
 
 import static org.lwjgl.opengl.GL11.*;
 
+/**
+ * The basic platform class.<br/>
+ * To add new types extend this, also override the empty
+ * logic method. The player logic must be overridden for
+ * it to react differently
+ * 
+ * @author Freddie Poser
+ *
+ */
 public class Platform {
 
 	protected double x, y, width, height;

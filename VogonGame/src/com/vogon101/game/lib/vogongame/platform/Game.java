@@ -29,7 +29,7 @@ public class Game {
 
 	protected Level level = null;
 	protected Player player = null;
-	protected int WIDTH, HEIGHT;
+	protected int WIDTH, HEIGHT, floor;
 	protected String title = "Vogongame";
 	
 	public Game() {
@@ -39,7 +39,6 @@ public class Game {
 	 * Called when the window is closed by the user
 	 */
 	public void onClose() {
-		System.out.println("Game closed without errors");
 	}
 	
 	/**

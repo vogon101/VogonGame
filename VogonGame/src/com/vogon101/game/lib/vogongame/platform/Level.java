@@ -71,19 +71,51 @@ public class Level {
 		mobs.add(new Mob(this, x, y, xSpeed, ySpeed, xSave, ySave));
 	}
 	
+	/**
+	 * Return the list of {@link Mob}s in the current {@link Level}
+	 * @return
+	 */
 	public ArrayList<Mob> getMobs() {
 		return mobs;
 	}
 	
+	
+	/**
+	 * Return the list of {@link Platform}s in the current {@link Level}
+	 * @return
+	 */
 	public ArrayList<Platform> getPlatforms() {
 		return platforms;
 	}
 	
+	/**
+	 * Set the dimensions of the level (the screen dimensions)
+	 * @param WIDTH_
+	 * @param HEIGHT_
+	 */
 	public void setDimens (double WIDTH_, double HEIGHT_) {
 		
-		WIDTH =  WIDTH_*2;
-		HEIGHT = HEIGHT_*2;
+		WIDTH =  WIDTH_;
+		HEIGHT = HEIGHT_;
 		
+	}
+	
+	/**
+	 * Override to add level generation
+	 */
+	public void genLevel() {
+		
+	}
+	
+	/**
+	 * Add a new platform to the level
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 */
+	public void addPlatform (double x, double y, double width, double height) {
+		platforms.add(new Platform(x, y, width, height));
 	}
 	
 }

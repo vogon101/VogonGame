@@ -92,8 +92,8 @@ public class Mob {
 	public void logic() {
 		x += xSpeed;
 		y += ySpeed;
-		//gravity();
-		if (x>level.WIDTH) {
+		gravity();
+		if (x>level.WIDTH-width) {
 			xSpeed = -xSave;
 		}
 		if (x<0) {

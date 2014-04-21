@@ -4,6 +4,11 @@ import com.vogon101.game.lib.vogongame.VogonGameException;
 import com.vogon101.game.lib.vogongame.platform.Game;
 import com.vogon101.game.lib.vogongame.platform.Level;
 
+/**
+ * Just a test
+ * @author Freddie Poser
+ *
+ */
 public class TestGame extends Game{
 
 	public TestGame(int width, int height) {
@@ -22,6 +27,7 @@ public class TestGame extends Game{
 		
 		game = new TestGame(1280,720);
 		game.getLevel().addMob(200,200,1,0,1,0);
+		game.getLevel().addPlatform(300, 50, 100, 16);
 		game.start();
 		
 		

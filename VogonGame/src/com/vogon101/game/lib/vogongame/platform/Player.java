@@ -168,11 +168,19 @@ public class Player {
 		x += xSpeed;
 		y += ySpeed;
 		control();
+		checkPlatforms();
 		gravity();
 		if(!newFloor)
 			floor = baseFloor;
 	}
 	
+	public void checkPlatforms() {
+		for (Platform plat: level.getPlatforms()) {
+			if (isOnPlatform(plat)) {
+				floor  = plat.getTopEdge();
+			}
+		}
+	}
 	
 	/**
 	 * Basic gravity, override for fancier stuff
@@ -267,7 +275,7 @@ public class Player {
 	 * @return true if player is on platform
 	 */
 	public boolean isOnPlatform(Platform plat) {
-		if (x > plat.getLeftEdge() && x < plat.getRightEdge()){
+		if (x+width/2 > plat.getLeftEdge() && x+width/2 < plat.getRightEdge()){
 			//if above top of platform
 			if (y > plat.getTopEdge()-4 && y < plat.getTopEdge()+4) {
 				return true;
