@@ -15,6 +15,7 @@ public class Platform {
 
 	protected double x, y, width, height;
 	protected double r = 0, g = 1,  b = 0.1;
+	protected Level level;
 	
 	/**
 	 * <b>Constructor</b>
@@ -23,7 +24,7 @@ public class Platform {
 	 * @param width
 	 * @param height
 	 */
-	public Platform (double x, double y,double  width, double height){
+	public Platform (double x, double y,double  width, double height, Level level){
 		this.x=x;
 		this.y=y;
 		this.width = width;

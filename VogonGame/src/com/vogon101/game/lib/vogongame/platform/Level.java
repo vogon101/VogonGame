@@ -20,10 +20,20 @@ public class Level {
 	protected Game game;
 	protected double WIDTH, HEIGHT;
 	
+	/**
+	 * <bConstrutor<b>
+	 * @param game_ Reference game object
+	 */
 	public Level (Game game_) {
 		game = game_;
 	}
 	
+	/**
+	 * <bConstrutor<b>
+	 * @param game_ Reference game object
+	 * @param WIDTH_ Width of the screen
+	 * @param HEIGHT_ Height of the screen
+	 */
 	public Level (Game game_, double WIDTH_, double HEIGHT_) {
 		game = game_;
 		WIDTH =  WIDTH_;
@@ -116,11 +126,34 @@ public class Level {
 	 * @param height
 	 */
 	public void addPlatform (double x, double y, double width, double height) {
-		platforms.add(new Platform(x, y, width, height));
+		platforms.add(new Platform(x, y, width, height, this));
 	}
 	
+	/**
+	 * Returns the {@link ArrayList} of coins
+	 * @return
+	 */
 	public ArrayList<Coin> getCoins () {
 		return coins;
+	}
+	
+	/**
+	 * Add a new block to the level
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 */
+	public void addBlock (double x, double y, double width, double height) {
+		platforms.add(new Block(x, y, width, height, this));
+	}
+	
+	/**
+	 * Return the reference object
+	 * @return
+	 */
+	public Game getGame () {
+		return game;
 	}
 	
 }

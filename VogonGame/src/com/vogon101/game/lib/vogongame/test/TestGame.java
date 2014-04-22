@@ -46,6 +46,7 @@ public class TestGame extends Game{
 		game = new TestGame(1280,720);
 		game.getLevel().addMob(200,200,1,0,1,0);
 		game.getLevel().addPlatform(300, 50, 100, 16);
+		game.getLevel().addBlock(450, 50, 25, 25);
 		game.start();
 		
 		

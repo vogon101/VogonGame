@@ -106,18 +106,27 @@ public class Game {
 		
 		mainloop();
 		
-		
-		
 	}
 	
+	/**
+	 * Returns the level object for reference and other such
+	 * @return
+	 */
 	public Level getLevel() {
 		return level;
 	}
 	
+	/**
+	 * Returns the player object for reference and other such
+	 * @return
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 	
+	/** 
+	 * Loops all the logics
+	 */
 	private void logic() {
 		for (Mob mob : level.getMobs()) {
 			mob.logic();
@@ -188,13 +197,16 @@ public class Game {
 	 * 
 	 * Override this if you need to add additional objects to render that are not
 	 * contained in the {@link Player.draw()}or the rendering of all the
-	 * mobs/platforms in the level
+	 * mobs/platforms/coins in the level
 	 */
 	public void addRender() {
 		
 	}
 	
-
+	/**
+	 * DO NOT OVERRIDE
+	 * @throws LWJGLException
+	 */
 	protected void initGl() throws LWJGLException{
 		Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 		Display.create();

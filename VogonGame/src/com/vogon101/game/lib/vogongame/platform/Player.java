@@ -2,11 +2,15 @@ package com.vogon101.game.lib.vogongame.platform;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.util.Random;
+
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
+import org.omg.CosNaming.IstringHelper;
 
 import com.vogon101.game.lib.vogongame.VogonGameException;
+import com.vogon101.game.lib.vogongame.util.BadTextRender;
 import com.vogon101.game.lib.vogongame.util.VogonTextureLoader;
 
 /**
@@ -182,12 +186,54 @@ public class Player {
 		glDisable(GL_TEXTURE_2D);
 
 		glPopMatrix();
+		
+		BadTextRender.drawString("Score " + String.valueOf(score), 100, 100);
 	}
 
+	/**
+	 * Main logic method
+	 */
 	public void logic() {
+		
+		if (alive) {
+			x += xSpeed;
+			y += ySpeed;
+			control();
+			checkPlatforms();
+			checkOutside();
+			checkMobs();
+			gravity();
+			if (!newFloor) {
+				floor = baseFloor;
+			}
+			checkCoins();
+			
+						
+		}
+	}
+	
+	/**
+	 * Pick up nearby coins
+	 */
+	public void checkCoins () {
+		for (Coin coin : level.getCoins()) {
+			if (coin.x < x+50 && coin.x > x-50) {
+				if (!coin.falling && coin.there) {
+					coin.there = false;
+					score++;
+					coin.xSpeed = 0;
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Make the player "Ascend to heaven"
+	 */
+	public void DieAnime () {
 		if (!alive) {
 			if (dieing) {
-				dieTimer++;
+				dieTimer+=2;
 				if (dieTimer > 0 && dieTimer < 150) {
 					y++;
 				}
@@ -225,21 +271,11 @@ public class Player {
 				}
 			}
 		}
-		
-		else {
-			x += xSpeed;
-			y += ySpeed;
-			control();
-			checkPlatforms();
-			checkOutside();
-			checkMobs();
-			gravity();
-			if (!newFloor) {
-				floor = baseFloor;
-			}
-		}
 	}
 	
+	/**
+	 * Mob logic method, kills mobs/player
+	 */
 	public void checkMobs() {
 		for (Mob mob : level.getMobs()) {
 			if (mob.isAlive()) {
@@ -261,6 +297,8 @@ public class Player {
 			}
 		}
 	}
+	
+	//TODO:USE LibGDX
 	
 	/**
 	 * Check if the player is outside the bounds of the level
@@ -285,6 +323,23 @@ public class Player {
 				floor = plat.getTopEdge();
 				newFloor = true;
 				check = true;
+			}
+			if (plat.getClass() == Block.class) {
+				if (isOnPlatform(plat) && !((Block) plat).payed) {
+					floor = plat.getTopEdge();
+					((Block) plat).land();
+					newFloor = true;
+					check = true;
+					Random r = new Random();
+					for (int i = 0; i < r.nextInt(40); i++) {
+						int test  = r.nextInt(2);
+						if (test == 1) {
+							
+							level.getCoins().add(new Coin(plat.x+(width/2), plat.y+(height/2), level.game, -r.nextDouble()+0.2, r.nextDouble()-0.2));
+						}
+						level.getCoins().add(new Coin(plat.x+(width/2), plat.y+(height/2), level.game, r.nextDouble()-0.2, r.nextDouble()-0.2));
+					}
+				}
 			}
 		}
 
@@ -331,6 +386,10 @@ public class Player {
 		return false;
 	}
 
+	
+	/**
+	 * Main keyboard input method
+	 */
 	public void control() {
 		if (Keyboard.isKeyDown(Keyboard.KEY_W) && y <= floor) {
 			jump = true;
@@ -404,7 +463,10 @@ public class Player {
 	public void setBaseFloor(double floor) {
 		baseFloor = floor;
 	}
-
+	
+	/**
+	 * Kill the player
+	 */
 	public void die() {
 		dieing = true;
 		alive = false;
