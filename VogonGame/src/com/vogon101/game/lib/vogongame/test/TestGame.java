@@ -41,12 +41,11 @@ public class TestGame extends Game{
 	}
 
 	private static TestGame game;
-	public static void main (String a[]) throws VogonGameException {
+	public static void main (String a[]) throws VogonGameException, InterruptedException {
 		
 		game = new TestGame(1280,720);
-		game.getLevel().addMob(200,200,1,0,1,0);
-		game.getLevel().addPlatform(300, 50, 100, 16);
-		game.getLevel().addBlock(450, 50, 25, 25);
+		game.getLevel().gen(1);
+		Thread.sleep(500);
 		game.start();
 		
 		

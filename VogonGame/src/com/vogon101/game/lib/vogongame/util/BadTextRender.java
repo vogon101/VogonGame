@@ -1,6 +1,6 @@
 package com.vogon101.game.lib.vogongame.util;
 
-import static org.lwjgl.opengl.GL11.glColor3d;
+import static org.lwjgl.opengl.GL11.*;
 
 import java.awt.Font;
 
@@ -9,13 +9,26 @@ import org.newdawn.slick.TrueTypeFont;
 
 public class BadTextRender {
 
-	public static void drawString(int x,int y,String write){
-        Font font1 = new Font("Times New Roman", Font.PLAIN, 10);
-        TrueTypeFont font;
-        font = new TrueTypeFont(font1, false);
-        font.drawString(x,y,write);
- 
-    }
+	private static Font font;
+	private static TrueTypeFont ttf;
+	
+
+	public static void initText() {
+		font = new Font("Verdana", Font.BOLD, 20);
+	    ttf = new TrueTypeFont(font, true);
+	}
+
+	public static void renderText (String text, float x, float y) {
+		
+		if (ttf == null) {
+			initText();
+		}
+		ttf.drawString(x, y, text);
+		
+		
+		
+	}
+
 	
 	public static void drawString(String s, int x, int y) {
 	      int startX = x;

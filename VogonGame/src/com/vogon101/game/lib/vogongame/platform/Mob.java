@@ -74,14 +74,21 @@ public class Mob {
 	 * @param xSave The default speed of the mob on the x axis
 	 * @param ySave The default speed of the mob on the y axis
 	 */
-	public Mob (Level level_, double x, double y, int xSpeed, int ySpeed, int xSave, int ySave) throws VogonGameException {
+	public Mob (Level level_, double x, double y, int xSpeed, int ySpeed, int xSave, int ySave)  {
 		level = level_; 
 		this.x = x;
 		this.y = y;
 		this.xSpeed = xSpeed;
 		this.ySpeed = ySpeed;
 		if (xSave < 0 || ySave < 0) {
-			throw new VogonGameException("One or more of the save variables was negative");
+			System.out.println("One or more of the save vars was negative, making both +tive");
+			 if (xSave < 0) {
+				 xSave = xSave*-1;
+			 }
+			 if (ySave < 0) {
+				 ySave = ySave*-1;
+			 }
+			 
 		}
 		this.xSave = xSave;
 		this.ySave = ySave;

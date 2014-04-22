@@ -17,8 +17,10 @@ import static org.lwjgl.opengl.GL11.glVertex2d;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
 
 import com.vogon101.game.lib.vogongame.VogonGameException;
+import com.vogon101.game.lib.vogongame.util.BadTextRender;
 
 /**
  * <b>The main game class</b>
@@ -34,7 +36,7 @@ public class Game {
 
 	protected Level level = null;
 	protected Player player = null;
-	protected int WIDTH, HEIGHT, floor;
+	protected int WIDTH, HEIGHT, floor, levelnum = 1;
 	protected String title = "Vogongame";
 	
 	public Game() {
@@ -103,6 +105,8 @@ public class Game {
 		} catch (LWJGLException e) {
 			throw new VogonGameException("The window could not be created; ERROR: " + e.getMessage());
 		}
+		
+		BadTextRender.initText();
 		
 		mainloop();
 		
@@ -183,11 +187,19 @@ public class Game {
 		// Modify projection matrix - 2d projection
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrtho(0, 1280, 0, 720, -1, 1);
+		glOrtho(0, WIDTH, 0, HEIGHT, -1, 1);
 
 		// Modify modelview matrix
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
+		
+		GL11.glViewport(0,0,WIDTH,HEIGHT);
+		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+ 
+		GL11.glMatrixMode(GL11.GL_PROJECTION);
+		GL11.glLoadIdentity();
+		GL11.glOrtho(0, WIDTH, 0, HEIGHT, -1, 1);
+		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
 	}
 	
@@ -244,5 +256,12 @@ public class Game {
 			glVertex2d(0, HEIGHT);
 		}
 		glEnd();
+	}
+	
+	public void levelWin (){
+		System.out.println("WIN");
+		player.reset();
+		levelnum++;
+		level.gen(levelnum);
 	}
 }

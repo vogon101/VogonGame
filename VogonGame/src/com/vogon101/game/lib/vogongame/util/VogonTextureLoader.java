@@ -2,7 +2,6 @@ package com.vogon101.game.lib.vogongame.util;
 
 import java.io.File;
 import java.io.FileInputStream;
-
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
@@ -29,5 +28,6 @@ public class VogonTextureLoader {
 		}
 		return texture;
 	}
+	
 	
 }

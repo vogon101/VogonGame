@@ -41,7 +41,7 @@ public class Player {
 			dieTimer = 0;
 	protected double x, y, r = 1, g = 0, b = 0, floor = 0, baseFloor = 0, xSpawn = 0, ySpawn =0;
 	protected boolean newFloor = false, jump = false, alive = true,
-			dieing = false, respawning = false;
+			dieing = false, respawning = false, win = false;
 
 	/**
 	 * <b>Constructor</b><br/>
@@ -208,7 +208,13 @@ public class Player {
 			}
 			checkCoins();
 			
+			if (win) {
+				game.levelWin();
+			}
 						
+		}
+		else {
+			DieAnime();
 		}
 	}
 	
@@ -320,6 +326,10 @@ public class Player {
 		boolean check = false;
 		for (final Platform plat : level.getPlatforms()) {
 			if (isOnPlatform(plat)) {
+				//The level end
+				if (plat.getClass() == GoalPlatform.class) {
+					win = true;
+				}
 				floor = plat.getTopEdge();
 				newFloor = true;
 				check = true;
@@ -341,6 +351,7 @@ public class Player {
 					}
 				}
 			}
+			
 		}
 
 		if (!check) {
@@ -456,7 +467,7 @@ public class Player {
 
 	/**
 	 * Set the "ground level" for the player, the gravity will bring him down to
-	 * here if he is not on a platform
+	 * here if he is not on a platform 
 	 * 
 	 * @param floor
 	 */
@@ -470,5 +481,11 @@ public class Player {
 	public void die() {
 		dieing = true;
 		alive = false;
+	}
+	
+	public void reset() {
+		x = xSpawn;
+		win = false;
+		y = ySpawn+4;
 	}
 }

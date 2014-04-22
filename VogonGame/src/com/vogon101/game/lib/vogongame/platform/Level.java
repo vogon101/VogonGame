@@ -78,7 +78,7 @@ public class Level {
 	 * @param ySave
 	 * @throws VogonGameException
 	 */
-	public void addMob(double x, double y, int xSpeed, int ySpeed, int xSave, int ySave) throws VogonGameException {
+	public void addMob(double x, double y, int xSpeed, int ySpeed, int xSave, int ySave){
 		mobs.add(new Mob(this, x, y, xSpeed, ySpeed, xSave, ySave));
 	}
 	
@@ -154,6 +154,17 @@ public class Level {
 	 */
 	public Game getGame () {
 		return game;
+	}
+	
+	public void addGoalPlatform(double x, double y, double width, double height) {
+		platforms.add(new GoalPlatform(x, y, width, height, this));
+	}
+
+	public void gen(int levelnum){
+		addMob(200,200,1,0,1,0);
+		addPlatform(300, 50, 100, 16);
+		addBlock(450, 50, 25, 25);
+		addGoalPlatform(570, 50, 100, 16);
 	}
 	
 }
