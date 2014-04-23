@@ -17,6 +17,7 @@ public class Level {
 	protected ArrayList<Mob> mobs  = new ArrayList<Mob>();
 	protected ArrayList<Platform> platforms = new ArrayList<Platform>();
 	protected ArrayList<Coin> coins = new ArrayList<Coin>();
+	protected ArrayList<Wall> walls = new ArrayList<Wall>();
 	protected Game game;
 	protected double WIDTH, HEIGHT;
 	
@@ -164,7 +165,16 @@ public class Level {
 		addMob(200,200,1,0,1,0);
 		addPlatform(300, 50, 100, 16);
 		addBlock(450, 50, 25, 25);
-		addGoalPlatform(570, 50, 100, 16);
+		addPlatform(570, 50, 100, 16);
+		addWall(700, 0, 32, 500);
+	}
+	
+	public void addWall(int x, int y, int width , int height) {
+		walls.add(new Wall(this, x, y, width, height));
+	}
+	
+	public ArrayList<Wall> getWalls () {
+		return walls;
 	}
 	
 }
