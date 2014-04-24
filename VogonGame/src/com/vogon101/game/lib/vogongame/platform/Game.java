@@ -170,6 +170,10 @@ public class Game {
 		for (Coin coin : level.getCoins()) {
 			coin.draw();
 		}
+		//TODO: FIX BAD CODE 
+		for (Wall wall : level.walls) {
+			wall.draw();
+		}
 		player.draw();
 		
 		addRender();

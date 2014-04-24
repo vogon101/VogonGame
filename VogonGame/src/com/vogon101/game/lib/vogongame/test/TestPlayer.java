@@ -6,10 +6,11 @@ import com.vogon101.game.lib.vogongame.platform.Player;
 
 public class TestPlayer extends Player{
 
-	
-	public TestPlayer(TestGame game_, Level level_) {
-		super((Game)game_, level_);
+	public TestPlayer(Game game_, Level level_, double x, double y) {
+		super(game_, level_, x, y);
 	}
+
+	
 	
 	
 
