@@ -15,9 +15,8 @@ public class TestGame extends Game{
 
 	public TestGame(int width, int height) {
 		
-		TestPlayer tp = new TestPlayer(this, null, 900, 100);
-		tp.setPos(900, 100);
-		tp.setBaseFloor(0);
+		TestPlayer tp = new TestPlayer(this, null);
+		tp.setPos(100, 100);
 		setPlayer(tp);
 		setDimen(width, height);
 		setLevel(new Level(this, width, height));

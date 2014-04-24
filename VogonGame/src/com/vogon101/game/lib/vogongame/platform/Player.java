@@ -88,8 +88,6 @@ public class Player {
 	 */
 	public void setTexture(Texture texture) {
 		this.texture = texture;
-		width = texture.getImageWidth();
-		height = texture.getImageHeight();
 	}
 
 	/**
@@ -103,8 +101,6 @@ public class Player {
 	 */
 	public void setTexture(String path) throws VogonGameException {
 		texture = VogonTextureLoader.loadTexture(path);
-		width = texture.getImageWidth();
-		height = texture.getImageHeight();
 	}
 
 	/**
@@ -120,8 +116,6 @@ public class Player {
 	 */
 	public void setTexture(String path, String type) throws VogonGameException {
 		texture = VogonTextureLoader.loadTexture(path, type);
-		width = texture.getImageWidth();
-		height = texture.getImageHeight();
 	}
 
 	/**
@@ -150,7 +144,7 @@ public class Player {
 	 */
 	public void draw() {
 		glPushMatrix();
-		glTranslated(x, y-7, 0);
+		glTranslated(x, y, 0);
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND); glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -212,7 +206,6 @@ public class Player {
 			if (!newFloor) {
 				floor = baseFloor;
 			}
-			checkWalls();
 			checkCoins();
 			
 			if (win) {
@@ -370,7 +363,6 @@ public class Player {
 	 * Basic gravity, override for fancier stuff
 	 */
 	public void gravity() {
-		System.out.println(y);
 		if (!jump) {
 			if (y > floor) {
 				ySpeed = -1;
@@ -495,15 +487,5 @@ public class Player {
 		x = xSpawn;
 		win = false;
 		y = ySpawn+4;
-	}
-	
-	public void checkWalls() {
-		for (Wall wall : level.getWalls())
-			if (x + width > wall.getLeftEdge() - 5 && x + width < wall.getLeftEdge() + 5) {
-				x-=3;
-			}
-			else if (x > wall.getRightEdge() - 5 && x <  + wall.getRightEdge() + 5) {
-				x+=3;
-			}
 	}
 }

@@ -21,7 +21,7 @@ public class Mob {
 	protected Texture texture = null;
 	protected int height  = 64, width = 64, xSpeed = 0, ySpeed = 0, xSave = xSpeed, ySave = ySpeed, jumptimer, dieTimer, respawnTimer;
 	protected double x, y, r = 0, g = 0, b = 1, floor = 0, basefloor = 0;
-	protected boolean jump = false, alive = true, there = true, dieing = false, respawning = false, wallLeft = false, wallRight = false;
+	protected boolean jump = false, alive = true, there = true, dieing = false, respawning = false;
 	
 	/**
 	 * <b>Constructor</b><br/>
@@ -120,20 +120,11 @@ public class Mob {
 			x += xSpeed;
 			y += ySpeed;
 			gravity();
-			checkWalls();
 			if (x>level.WIDTH-width) {
 				xSpeed = -xSave;
 			}
-			else if (x<0) {
+			if (x<0) {
 				xSpeed = xSave;
-			}
-			else if (wallLeft) {
-				xSpeed = -xSave;
-				wallLeft = false;
-			}
-			else if (wallRight) {
-				xSpeed = xSave;
-				wallRight = false;
 			}
 		}
 	}
@@ -365,17 +356,5 @@ public class Mob {
 			level.getCoins().add(new Coin(x+(width/2), y+(height/2), level.game, r.nextDouble(), r.nextDouble()));
 		}
 		
-	}
-	
-	public void checkWalls() {
-		for (Wall wall : level.getWalls())
-			if (x + width > wall.getLeftEdge() - 5 && x + width < wall.getLeftEdge() + 5) {
-				x-=3;
-				wallLeft = true;
-			}
-			else if (x > wall.getRightEdge() - 5 && x <  + wall.getRightEdge() + 5) {
-				x+=3;
-				wallRight = true;
-			}
 	}
 }
