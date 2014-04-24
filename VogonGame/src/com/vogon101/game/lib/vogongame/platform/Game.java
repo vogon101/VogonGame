@@ -20,7 +20,6 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 import com.vogon101.game.lib.vogongame.VogonGameException;
-import com.vogon101.game.lib.vogongame.util.BadTextRender;
 
 /**
  * <b>The main game class</b>
@@ -106,7 +105,6 @@ public class Game {
 			throw new VogonGameException("The window could not be created; ERROR: " + e.getMessage());
 		}
 		
-		BadTextRender.initText();
 		
 		mainloop();
 		

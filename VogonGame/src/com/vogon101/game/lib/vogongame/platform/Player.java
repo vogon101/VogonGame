@@ -10,6 +10,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.omg.CosNaming.IstringHelper;
 
 import com.vogon101.game.lib.vogongame.VogonGameException;
+import com.vogon101.game.lib.vogongame.util.BadNumberRenderer;
 import com.vogon101.game.lib.vogongame.util.BadTextRender;
 import com.vogon101.game.lib.vogongame.util.VogonTextureLoader;
 
@@ -158,12 +159,9 @@ public class Player {
 		 * For a quad the coords are: vertex 1 = 0, 0 vertex 2 = width, 0 vertex
 		 * 3 = width, height vertex 4 = 0, height
 		 */
-
-		int sm = 4;
+		
 		
 		if (texture != null) {
-			
-			glBegin(GL_QUADS);
 			texture.bind();
 			{
 				glTexCoord2d(1, 1);
@@ -370,7 +368,6 @@ public class Player {
 	 * Basic gravity, override for fancier stuff
 	 */
 	public void gravity() {
-		System.out.println(y);
 		if (!jump) {
 			if (y > floor) {
 				ySpeed = -1;
@@ -488,6 +485,7 @@ public class Player {
 	 */
 	public void die() {
 		dieing = true;
+		System.out.println("DIE");
 		alive = false;
 	}
 	
@@ -498,12 +496,16 @@ public class Player {
 	}
 	
 	public void checkWalls() {
-		for (Wall wall : level.getWalls())
+		for (Wall wall : level.getWalls()) {
+			boolean left = false, right  =false;
 			if (x + width > wall.getLeftEdge() - 5 && x + width < wall.getLeftEdge() + 5) {
 				x-=3;
+				left = true;
 			}
 			else if (x > wall.getRightEdge() - 5 && x <  + wall.getRightEdge() + 5) {
 				x+=3;
+				right = true;
 			}
+		}	
 	}
 }

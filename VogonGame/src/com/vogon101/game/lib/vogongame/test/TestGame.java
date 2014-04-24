@@ -5,6 +5,7 @@ import org.lwjgl.LWJGLException;
 import com.vogon101.game.lib.vogongame.VogonGameException;
 import com.vogon101.game.lib.vogongame.platform.Game;
 import com.vogon101.game.lib.vogongame.platform.Level;
+import com.vogon101.game.lib.vogongame.util.BadNumberRenderer;
 
 /**
  * Just a test
@@ -15,8 +16,8 @@ public class TestGame extends Game{
 
 	public TestGame(int width, int height) {
 		
-		TestPlayer tp = new TestPlayer(this, null, 900, 100);
-		tp.setPos(900, 100);
+		TestPlayer tp = new TestPlayer(this, null, 100, 100);
+		tp.setPos(100, 100);
 		tp.setBaseFloor(0);
 		setPlayer(tp);
 		setDimen(width, height);

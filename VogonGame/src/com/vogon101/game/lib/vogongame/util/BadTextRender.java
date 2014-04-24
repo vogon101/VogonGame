@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.*;
 import java.awt.Font;
 
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 
 public class BadTextRender {
@@ -14,8 +15,17 @@ public class BadTextRender {
 	
 
 	public static void initText() {
+		glPushMatrix();
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glDisable(GL11.GL_LIGHTING);
+		
 		font = new Font("Verdana", Font.BOLD, 20);
 	    ttf = new TrueTypeFont(font, true);
+	    glDisable(GL_TEXTURE_2D);
+	    //glEnable(GL_DEPTH_TEST);
+	    glEnable(GL_LIGHTING);
+	    glPopMatrix();
+	    
 	}
 
 	public static void renderText (String text, float x, float y) {
