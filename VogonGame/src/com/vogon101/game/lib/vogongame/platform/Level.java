@@ -164,7 +164,7 @@ public class Level {
 	public void gen(int levelnum){
 		addMob(200,200,1,0,1,0);
 		addPlatform(300, 50, 100, 16);
-		addBlock(450, 50, 25, 25);
+		addBlock(450, 75, 25, 25);
 		addPlatform(570, 50, 100, 16);
 		addWall(700, 0, 32, 500);
 	}

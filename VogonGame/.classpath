@@ -9,5 +9,10 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/Freddie/Desktop/LWGJL LIB/lwjgl_util.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Freddie/Desktop/LWGJL LIB/slick-util (1).jar"/>
+	<classpathentry kind="lib" path="C:/Users/Freddie/Desktop/LWGJL LIB/ibxm.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Freddie/Desktop/LWGJL LIB/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Freddie/Desktop/LWGJL LIB/jorbis-0.0.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Freddie/Desktop/LWGJL LIB/lwjgl_util_applet.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Freddie/Desktop/LWGJL LIB/slick-util.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

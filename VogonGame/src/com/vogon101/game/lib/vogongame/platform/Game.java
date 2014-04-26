@@ -144,6 +144,7 @@ public class Game {
 		}
 		player.logic();
 		addLogic();
+		playMusic();
 	}
 	/**
 	 * Override this method to update additional things,
@@ -267,5 +268,9 @@ public class Game {
 		player.reset();
 		levelnum++;
 		level.gen(levelnum);
+	}
+	
+	public void playMusic() {
+		
 	}
 }

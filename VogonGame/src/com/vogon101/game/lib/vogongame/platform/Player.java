@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.*;
 import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
+import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.omg.CosNaming.IstringHelper;
@@ -32,6 +33,9 @@ import com.vogon101.game.lib.vogongame.util.VogonTextureLoader;
  * 
  */
 public class Player {
+	
+	public Audio jumpSound;
+	public Audio coinSound;
 
 	protected Game game;
 	protected Texture texture = null;
@@ -159,7 +163,6 @@ public class Player {
 		 * 3 = width, height vertex 4 = 0, height
 		 */
 
-		int sm = 4;
 		
 		if (texture != null) {
 			
@@ -234,6 +237,7 @@ public class Player {
 				if (!coin.falling && coin.there) {
 					coin.there = false;
 					score++;
+					coinSound.playAsSoundEffect(1.0f, 1.0f, false);
 					coin.xSpeed = 0;
 				}
 			}
@@ -342,20 +346,24 @@ public class Player {
 				check = true;
 			}
 			if (plat.getClass() == Block.class) {
-				if (isOnPlatform(plat) && !((Block) plat).payed) {
-					floor = plat.getTopEdge();
-					((Block) plat).land();
-					newFloor = true;
-					check = true;
-					Random r = new Random();
-					for (int i = 0; i < r.nextInt(40); i++) {
-						int test  = r.nextInt(2);
-						if (test == 1) {
-							
-							level.getCoins().add(new Coin(plat.x+(width/2), plat.y+(height/2), level.game, -r.nextDouble()+0.2, r.nextDouble()-0.2));
+				if (y+height > plat.getBottomEdge() && y+height < plat.getTopEdge()+4) {
+					if (x + width / 1.5 > plat.getLeftEdge() && x + width / 3 < plat.getRightEdge()) {
+						y-=3;
+						jump = false;
+						jumptimer = 0;
+						if (!((Block) plat).payed) {
+							((Block) plat).land();
+							Random r = new Random();
+							for (int i = 0; i < r.nextInt(40); i++) {
+								int test  = r.nextInt(2);
+								if (test == 1) {
+									
+									level.getCoins().add(new Coin(plat.x+(width/2), plat.y+(height/2), level.game, -r.nextDouble()+0.2, r.nextDouble()-0.2));
+								}
+								level.getCoins().add(new Coin(plat.x+(width/2), plat.y+(height/2), level.game, r.nextDouble()-0.2, r.nextDouble()-0.2));
+							}
 						}
-						level.getCoins().add(new Coin(plat.x+(width/2), plat.y+(height/2), level.game, r.nextDouble()-0.2, r.nextDouble()-0.2));
-					}
+					}	
 				}
 			}
 			
@@ -370,7 +378,6 @@ public class Player {
 	 * Basic gravity, override for fancier stuff
 	 */
 	public void gravity() {
-		System.out.println(y);
 		if (!jump) {
 			if (y > floor) {
 				ySpeed = -1;
@@ -413,6 +420,7 @@ public class Player {
 		if (Keyboard.isKeyDown(Keyboard.KEY_W) && y <= floor) {
 			jump = true;
 			jumptimer = 0;
+			jumpSound.playAsSoundEffect(1.0f, 1.0f, false);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_S) && y >= floor
 				|| Keyboard.isKeyDown(Keyboard.KEY_S) && y >= floor + 1) {
@@ -489,6 +497,7 @@ public class Player {
 	public void die() {
 		dieing = true;
 		alive = false;
+		
 	}
 	
 	public void reset() {
